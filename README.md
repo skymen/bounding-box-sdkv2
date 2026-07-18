@@ -1,21 +1,24 @@
 <img src="./src/icon.svg" width="100" /><br>
-# Sample Addon
-<i>Description</i> <br>
-### Version 0.0.0.0
+# Bounding Box
+<i>Resizes the object to fit the bounding box of its children or a custom list of instances and layers</i> <br>
+### Version 2.0.0.0
 
-[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/ConstructFund/construct-addon-wizard-scaffold/releases/download/sample_addon-0.0.0.0.c3addon/sample_addon-0.0.0.0.c3addon)
+[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/skymen/bounding-box-sdkv2/releases/download/skymen_bounding_box-2.0.0.0.c3addon/skymen_bounding_box-2.0.0.0.c3addon)
 <br>
-<sub> [See all releases](https://github.com/ConstructFund/construct-addon-wizard-scaffold/releases) </sub> <br>
+<sub> [See all releases](https://github.com/skymen/bounding-box-sdkv2/releases) </sub> <br>
 
-#### What's New in 0.0.0.0
-**Added:**
-Initial release.
-
+#### What's New in 2.0.0.0
+- **Added:** SDK v2 port, built with CAW. Projects made with the SDK v1 version load without changes. Added debugger panel support.
+- **Changed:** Layer entries in savegames are now stored by layer name instead of internal SID. Layer entries from old v1 savegames cannot be restored and are dropped. Instance entries still restore fine.
+- **Fixed:** Destroyed instances are now dropped from the custom list instead of leaving stale entries.
 
 <sub>[View full changelog](#changelog)</sub>
 
 ---
 <b><u>Author:</u></b> skymen <br>
+<b>[Construct Addon Page](https://www.construct.net/en/make-games/addons/1184/bounding-box)</b>  <br>
+<b>[Addon Website](https://www.construct.net/en/make-games/addons/1184/bounding-box)</b>  <br>
+<b>[Documentation](https://www.construct.net/en/make-games/addons/1184/bounding-box)</b>  <br>
 <sub>Made using [CAW](https://marketplace.visualstudio.com/items?itemName=skymen.caw) </sub><br>
 
 ## Table of Contents
@@ -42,48 +45,50 @@ npm run dev
 ```
 
 ## Examples Files
+| Description | Download |
+| --- | --- |
+| boundingbox-test-suite | [<img src="https://placehold.co/120x30/4493f8/FFF?text=Download&font=montserrat" width="120"/>](https://github.com/skymen/bounding-box-sdkv2/raw/refs/heads/main/examples/boundingbox-test-suite.c3p) |
 
 ---
 ## Properties
 | Property Name | Description | Type |
 | --- | --- | --- |
+| Bounding Box Mode | The bounding box mode. Own children: only direct children. All children: The entire hierarchy. Custom list: only the children in the custom list. | combo |
+| Enabled | Whether the bounding box is enabled. | check |
 
 
 ---
 ## Actions
 | Action | Description | Params
 | --- | --- | --- |
-| Sample Action Combo | This is a sample action | Param1             *(combo)* <br> |
-| Sample Action | This is a sample action | Param1             *(string)* <br> |
-| Sample Action Async | This is a sample action |  |
-| Sample Action | This is a sample action | Param1             *(string)* <br> |
+| Add layer to custom list | Add a layer to the custom list. | Layer             *(layer)* <br>Include Children             *(combo)* <br>Include Sub Layers             *(combo)* <br> |
+| Add object to custom list | Add an object to the custom list. | Object             *(object)* <br>Include Children             *(combo)* <br> |
+| Clear list | Clear the custom list. |  |
+| Remove from list | Remove an object from the custom list. | Object             *(object)* <br> |
+| Remove layer from list | Remove a layer from the custom list. | Layer             *(layer)* <br> |
+| Set bounding box mode | Set the bounding box mode. | Mode             *(combo)* <br> |
+| Set Enabled | Set whether the bounding box is enabled. | Enabled             *(boolean)* <br> |
+| Update bounding box | Update the bounding box. |  |
 
 
 ---
 ## Conditions
 | Condition | Description | Params
 | --- | --- | --- |
-| Sample Condition | This is a sample condition | Param1 *(combo)* <br> |
-| Sample Condition | This is a sample condition | Param1 *(string)* <br> |
-| Sample Trigger | This is a sample trigger |  |
-| Sample Condition | This is a sample condition |  |
+| Is enabled | Check whether the bounding box is enabled. |  |
 
 
 ---
 ## Expressions
 | Expression | Description | Return Type | Params
 | --- | --- | --- | --- |
-| Expression2 | Sample Expression | string |  | 
-| Expression | Sample Expression | number |  | 
-| SampleExpression | This is a sample expression | string |  | 
+| Count | The number of objects in the bounding box. | number |  | 
 
 
 ---
 ## Changelog
 
-### Version 0.0.0.0
-
-**Added:**
-Initial release.
-
----
+**2.0.0.0**
+- **Added:** SDK v2 port, built with CAW. Projects made with the SDK v1 version load without changes. Added debugger panel support.
+- **Changed:** Layer entries in savegames are now stored by layer name instead of internal SID. Layer entries from old v1 savegames cannot be restored and are dropped. Instance entries still restore fine.
+- **Fixed:** Destroyed instances are now dropped from the custom list instead of leaving stale entries.
