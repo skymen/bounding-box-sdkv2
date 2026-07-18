@@ -1,4 +1,4 @@
-<img src="./src/icon.svg" width="100" /><br>
+<img src="./examples/cover.webp" width="150" /><br>
 # Bounding Box
 <i>Resizes the object to fit the bounding box of its children or a custom list of instances and layers</i> <br>
 ### Version 2.0.0.2
