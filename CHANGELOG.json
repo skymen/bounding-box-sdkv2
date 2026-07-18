@@ -1,0 +1,7 @@
+{
+  "2.0.0.0": {
+    "added": "SDK v2 port, built with CAW. Projects made with the SDK v1 version load without changes. Added debugger panel support.",
+    "changed": "Layer entries in savegames are now stored by layer name instead of internal SID. Layer entries from old v1 savegames cannot be restored and are dropped. Instance entries still restore fine.",
+    "fixed": "Destroyed instances are now dropped from the custom list instead of leaving stale entries."
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "languageTag": "en-US",
+  "fileDescription": "Strings for skymen_bounding_box.",
+  "text": {
+    "behaviors": {
+      "skymen_bounding_box": {
+        "name": "Bounding Box",
+        "description": "Resizes the object to fit the bounding box of its children or a custom list of instances and layers",
+        "help-url": "https://www.construct.net/en/make-games/addons/1184/bounding-box",
+        "aceCategories": {
+          "general": "General"
+        },
+        "properties": {
+          "boundingBoxMode": {
+            "name": "Bounding Box Mode",
+            "desc": "The bounding box mode. Own children: only direct children. All children: The entire hierarchy. Custom list: only the children in the custom list.",
+            "items": {
+              "custom": "Custom List",
+              "own": "Own Children",
+              "all": "All Children"
+            }
+          },
+          "enabled": {
+            "name": "Enabled",
+            "desc": "Whether the bounding box is enabled."
+          }
+        },
+        "actions": {
+          "AddLayerToCustomList": {
+            "list-name": "Add layer to custom list",
+            "display-text": "{my}: Add [b]{0}[/b] to custom list (include children: [i]{1}[/i], include sub layers: [i]{2}[/i])",
+            "description": "Add a layer to the custom list.",
+            "params": {
+              "layer": {
+                "name": "Layer",
+                "desc": "The layer to add to the custom list."
+              },
+              "includeChildren": {
+                "name": "Include Children",
+                "desc": "Whether to include the children of the instances.",
+                "items": {
+                  "none": "None",
+                  "own": "Own",
+                  "all": "All"
+                }
+              },
+              "includeSubLayers": {
+                "name": "Include Sub Layers",
+                "desc": "Whether to include the sub layers of the layer.",
+                "items": {
+                  "none": "None",
+                  "own": "Own",
+                  "all": "All"
+                }
+              }
+            }
+          },
+          "AddObjectToCustomList": {
+            "list-name": "Add object to custom list",
+            "display-text": "{my}: Add [b]{0}[/b] to custom list (include children: [i]{1}[/i])",
+            "description": "Add an object to the custom list.",
+            "params": {
+              "object": {
+                "name": "Object",
+                "desc": "The object to add to the custom list."
+              },
+              "includeChildren": {
+                "name": "Include Children",
+                "desc": "Whether to include the children of the object.",
+                "items": {
+                  "none": "None",
+                  "own": "Own",
+                  "all": "All"
+                }
+              }
+            }
+          },
+          "ClearList": {
+            "list-name": "Clear list",
+            "display-text": "{my}: Clear custom list",
+            "description": "Clear the custom list.",
+            "params": {}
+          },
+          "RemoveFromList": {
+            "list-name": "Remove from list",
+            "display-text": "{my}: Remove [b]{0}[/b] from custom list",
+            "description": "Remove an object from the custom list.",
+            "params": {
+              "object": {
+                "name": "Object",
+                "desc": "The object to remove from the custom list."
+              }
+            }
+          },
+          "RemoveLayerFromList": {
+            "list-name": "Remove layer from list",
+            "display-text": "{my}: Remove [b]{0}[/b] from custom list",
+            "description": "Remove a layer from the custom list.",
+            "params": {
+              "layer": {
+                "name": "Layer",
+                "desc": "The layer to remove from the custom list."
+              }
+            }
+          },
+          "SetBoundingBoxMode": {
+            "list-name": "Set bounding box mode",
+            "display-text": "{my}: Set bounding box mode to [i]{0}[/i]",
+            "description": "Set the bounding box mode.",
+            "params": {
+              "mode": {
+                "name": "Mode",
+                "desc": "The bounding box mode.",
+                "items": {
+                  "custom": "Custom List",
+                  "own": "Own Children",
+                  "all": "All Children"
+                }
+              }
+            }
+          },
+          "SetEnabled": {
+            "list-name": "Set Enabled",
+            "display-text": "{my}: Set enabled to [i]{0}[/i]",
+            "description": "Set whether the bounding box is enabled.",
+            "params": {
+              "enabled": {
+                "name": "Enabled",
+                "desc": "Whether the bounding box is enabled."
+              }
+            }
+          },
+          "UpdateBoundingBox": {
+            "list-name": "Update bounding box",
+            "display-text": "{my}: Update bounding box",
+            "description": "Update the bounding box.",
+            "params": {}
+          }
+        },
+        "conditions": {
+          "IsEnabled": {
+            "list-name": "Is enabled",
+            "display-text": "{my}: Is enabled",
+            "description": "Check whether the bounding box is enabled.",
+            "params": {}
+          }
+        },
+        "expressions": {
+          "Count": {
+            "translated-name": "Count",
+            "description": "The number of objects in the bounding box.",
+            "params": {}
+          }
+        }
+      }
+    }
+  }
+}
