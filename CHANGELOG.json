@@ -1,4 +1,9 @@
 {
+  "2.0.0.2": {
+    "added": "",
+    "changed": "ACE definitions moved to one file per ACE. No behavior change.",
+    "fixed": ""
+  },
   "2.0.0.1": {
     "added": "",
     "changed": "Layer handling cleaned up: layer parameters are used directly as layer interfaces, sub layer lookup uses parentLayer, and the whole-project instance scan is isolated in one function so it can be swapped out when Construct adds a per-layer instance list. Removed defensive fallbacks that could hide errors.",
