@@ -1,4 +1,9 @@
 {
+  "2.0.0.1": {
+    "added": "",
+    "changed": "Layer handling cleaned up: layer parameters are used directly as layer interfaces, sub layer lookup uses parentLayer, and the whole-project instance scan is isolated in one function so it can be swapped out when Construct adds a per-layer instance list. Removed defensive fallbacks that could hide errors.",
+    "fixed": ""
+  },
   "2.0.0.0": {
     "added": "SDK v2 port, built with CAW. Projects made with the SDK v1 version load without changes. Added debugger panel support.",
     "changed": "Layer entries in savegames are now stored by layer name instead of internal SID. Layer entries from old v1 savegames cannot be restored and are dropped. Instance entries still restore fine.",

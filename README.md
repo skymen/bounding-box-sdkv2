@@ -1,16 +1,14 @@
 <img src="./src/icon.svg" width="100" /><br>
 # Bounding Box
 <i>Resizes the object to fit the bounding box of its children or a custom list of instances and layers</i> <br>
-### Version 2.0.0.0
+### Version 2.0.0.1
 
-[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/skymen/bounding-box-sdkv2/releases/download/skymen_bounding_box-2.0.0.0.c3addon/skymen_bounding_box-2.0.0.0.c3addon)
+[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/skymen/bounding-box-sdkv2/releases/download/skymen_bounding_box-2.0.0.1.c3addon/skymen_bounding_box-2.0.0.1.c3addon)
 <br>
 <sub> [See all releases](https://github.com/skymen/bounding-box-sdkv2/releases) </sub> <br>
 
-#### What's New in 2.0.0.0
-- **Added:** SDK v2 port, built with CAW. Projects made with the SDK v1 version load without changes. Added debugger panel support.
-- **Changed:** Layer entries in savegames are now stored by layer name instead of internal SID. Layer entries from old v1 savegames cannot be restored and are dropped. Instance entries still restore fine.
-- **Fixed:** Destroyed instances are now dropped from the custom list instead of leaving stale entries.
+#### What's New in 2.0.0.1
+- **Changed:** Layer handling cleaned up: layer parameters are used directly as layer interfaces, sub layer lookup uses parentLayer, and the whole-project instance scan is isolated in one function so it can be swapped out when Construct adds a per-layer instance list. Removed defensive fallbacks that could hide errors.
 
 <sub>[View full changelog](#changelog)</sub>
 
@@ -87,6 +85,9 @@ npm run dev
 
 ---
 ## Changelog
+
+**2.0.0.1**
+- **Changed:** Layer handling cleaned up: layer parameters are used directly as layer interfaces, sub layer lookup uses parentLayer, and the whole-project instance scan is isolated in one function so it can be swapped out when Construct adds a per-layer instance list. Removed defensive fallbacks that could hide errors.
 
 **2.0.0.0**
 - **Added:** SDK v2 port, built with CAW. Projects made with the SDK v1 version load without changes. Added debugger panel support.

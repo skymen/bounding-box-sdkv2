@@ -75,23 +75,14 @@ export default function (parentClass) {
       super._release();
     }
 
+    // Destroyed IWorldInstance interfaces throw on any access and SDK v2 has
+    // no public liveness check, so this try/catch is the detection mechanism.
     isInstAlive(inst) {
-      if (!inst) return false;
       try {
         void inst.x;
         return true;
       } catch (e) {
         return false;
-      }
-    }
-
-    resolveLayer(layerParam) {
-      if (layerParam && typeof layerParam === "object") return layerParam;
-      if (layerParam === null || layerParam === undefined) return null;
-      try {
-        return this.runtime.layout.getLayer(layerParam);
-      } catch (e) {
-        return null;
       }
     }
 
@@ -107,17 +98,13 @@ export default function (parentClass) {
       );
     }
 
-    addLayerToList(layerParam, instMode, layerMode) {
-      const layer = this.resolveLayer(layerParam);
-      if (!layer) return;
+    addLayerToList(layer, instMode, layerMode) {
       this.customList.push({ isLayer: true, layer, instMode, layerMode });
     }
 
-    removeLayerEntry(layerParam) {
-      const layer = this.resolveLayer(layerParam);
-      if (!layer) return;
+    removeLayerEntry(layer) {
       this.customList = this.customList.filter(
-        (x) => !x.isLayer || (x.layer !== layer && x.layer.index !== layer.index)
+        (x) => !x.isLayer || x.layer !== layer
       );
     }
 
@@ -125,11 +112,7 @@ export default function (parentClass) {
       if (!this.isInstAlive(inst)) return;
       map.set(inst.uid, inst);
       if (mode !== 0) {
-        let children = [];
-        try {
-          children = [...inst.children()];
-        } catch (e) {}
-        for (const child of children) {
+        for (const child of inst.children()) {
           this.collectFromInst(child, mode === 1 ? 0 : 2, map);
         }
       }
@@ -138,19 +121,10 @@ export default function (parentClass) {
     getLayerEntryLayers(layer, layerMode) {
       const layers = [layer];
       if (layerMode !== 0) {
-        let all = [];
-        try {
-          all = this.runtime.layout.getAllLayers();
-        } catch (e) {}
+        const all = this.runtime.layout.getAllLayers();
         const addChildren = (parent, recursive) => {
           for (const l of all) {
-            let p;
-            try {
-              p = l.parentLayer;
-            } catch (e) {
-              continue;
-            }
-            if (p === parent) {
+            if (l.parentLayer === parent) {
               layers.push(l);
               if (recursive) addChildren(l, true);
             }
@@ -161,32 +135,24 @@ export default function (parentClass) {
       return layers;
     }
 
-    collectFromLayer(layer, instMode, layerMode, map) {
-      const indexSet = new Set(
-        this.getLayerEntryLayers(layer, layerMode).map((l) => l.index)
-      );
-      // SDK v2 has no per-layer instance list, so scan every instance and
-      // filter by layer (v1 used the internal layer._GetInstances()).
+    // SDK v2 has no per-layer instance list (feature request pending), so this
+    // scans every instance in the project and filters by layer. Replace this
+    // single function when Construct exposes one.
+    getInstancesOnLayers(layers) {
+      const wanted = new Set(layers);
+      const result = [];
       for (const key in this.runtime.objects) {
-        const objectClass = this.runtime.objects[key];
-        let instances;
-        try {
-          instances = objectClass.getAllInstances();
-        } catch (e) {
-          continue;
+        for (const inst of this.runtime.objects[key].getAllInstances()) {
+          if (wanted.has(inst.layer)) result.push(inst);
         }
-        for (const inst of instances) {
-          let instLayer;
-          try {
-            instLayer = inst.layer;
-          } catch (e) {
-            continue;
-          }
-          if (!instLayer) continue;
-          if (indexSet.has(instLayer.index)) {
-            this.collectFromInst(inst, instMode, map);
-          }
-        }
+      }
+      return result;
+    }
+
+    collectFromLayer(layer, instMode, layerMode, map) {
+      const layers = this.getLayerEntryLayers(layer, layerMode);
+      for (const inst of this.getInstancesOnLayers(layers)) {
+        this.collectFromInst(inst, instMode, map);
       }
     }
 
@@ -205,11 +171,7 @@ export default function (parentClass) {
       });
 
       if (this.mode !== 0) {
-        let children = [];
-        try {
-          children = [...this.instance.children()];
-        } catch (e) {}
-        for (const child of children) {
+        for (const child of this.instance.children()) {
           this.collectFromInst(child, this.mode === 1 ? 0 : 2, map);
         }
       }
@@ -225,12 +187,7 @@ export default function (parentClass) {
       let anyInst = false;
 
       for (const inst of this.getAllObjects()) {
-        let bbox;
-        try {
-          bbox = inst.getBoundingBox();
-        } catch (e) {
-          continue;
-        }
+        const bbox = inst.getBoundingBox();
         anyInst = true;
         minX = Math.min(minX, bbox.left);
         minY = Math.min(minY, bbox.top);
@@ -305,10 +262,10 @@ export default function (parentClass) {
       this.customList = [];
       for (const x of o.customList || []) {
         if (x.isLayer) {
-          // v1 savegames stored layer SIDs (numbers). Those cannot be
-          // resolved with the public API, so only names are restored.
+          // v1 savegames stored layer SIDs (numbers), which cannot be resolved
+          // with the public API. Only name entries (v2 saves) are restored.
           if (typeof x.layer !== "string") continue;
-          const layer = this.resolveLayer(x.layer);
+          const layer = this.runtime.layout.getLayer(x.layer);
           if (!layer) continue;
           this.customList.push({
             isLayer: true,
@@ -318,10 +275,7 @@ export default function (parentClass) {
           });
         } else {
           if (x.inst === null || x.inst === undefined) continue;
-          let inst = null;
-          try {
-            inst = this.runtime.getInstanceByUid(x.inst);
-          } catch (e) {}
+          const inst = this.runtime.getInstanceByUid(x.inst);
           if (!inst) continue;
           this.customList.push({ isLayer: false, inst, mode: x.mode });
         }
